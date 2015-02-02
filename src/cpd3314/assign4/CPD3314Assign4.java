@@ -21,19 +21,21 @@
  */
 package cpd3314.assign4;
 
+import java.io.*;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
- * @author Len Payne <len.payne@lambtoncollege.ca>
+ * @au0thor Len Payne <len.payne@lambtoncollege.ca>
  */
 public class CPD3314Assign4 {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
         String[] questions = {
             "1. Sum of Numbers",
@@ -101,6 +103,26 @@ public class CPD3314Assign4 {
     public static void doExercise1() {
         // TODO: Com[plete Exercise 1 Below
 
+        int n;
+
+        System.out.println("Enter a positive, nonzero integer value:");
+        Scanner s = new Scanner(System.in);
+        n = s.nextInt();
+
+        if (n <= 0) {
+            System.out.println("Enter a positive, nonzero integer value");
+
+        } else {
+            int sum = 0;
+            for (int i = 0; i <= n; i++) {
+
+                sum = sum + i;
+
+            }
+            System.out.println("The sum of all integers up to " + n + " is " + sum);
+
+        }
+
     }
 
     /*
@@ -128,11 +150,36 @@ public class CPD3314Assign4 {
      * Input Validation: Do not accept a negative number for speed and do not 
      * accept any value less than 1 for time traveled.
      */
-    public static void doExercise3() {
+    public static void doExercise3() throws IOException {
         // TODO: Complete Exercise 2 & 3 Below
+        int speed, hours, sum = 0;
+
+        Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("ex3output.txt"), "UTF-8"));
+        try {
+
+            Scanner s = new Scanner(System.in);
+
+            System.out.println("Enter speed:");
+            speed = s.nextInt();
+            System.out.println("Enter hours:");
+            hours = s.nextInt();
+
+            if (speed < 1 || hours < 1) {
+                System.out.println("Enter positive value for speed and hours");
+            }
+
+            w.write("Hour    Distance Traveled" + System.getProperty("line.separator"));
+            w.write("---------------------------" + System.getProperty("line.separator"));
+            for (int i = 1; i <= hours; i++) {
+                sum = sum + speed;
+                w.write(+i + "         " + sum + System.getProperty("line.separator"));
+
+            }
+            w.close();
+        } catch (Exception e) {
+        }
 
     }
-
     /*
      * Exercise 10 - Largest and Smallest
      * 
@@ -158,10 +205,40 @@ public class CPD3314Assign4 {
      *   Enter an integer (-99 to quit):
      *   -99
      *   Smallest number is 3.
-     *   Largest number is 7.
+     *   Largest number i   s 7.
      */
+
     public static void doExercise10() {
         // TODO: Complete Exercise 10 Below
+
+        
+        
+        int num=0;
+       
+  Scanner s = new Scanner(System.in);
+        
+      
+
+        int largest = 0, smallest=999999;
+ 
+        while(num != -99){
+
+            System.out.println("Enter an integer (-99 to quit):");
+
+            num = s.nextInt();
+
+            if (num > largest && num != -99) {
+
+                largest = num;
+            } 
+            if (num < smallest && num!= -99 ) {
+                
+                smallest = num;
+            }
+
+        }
+        System.out.println("smallest number is " + smallest + ".");
+        System.out.println("Largest number i   s " + largest + ".");
 
     }
 
@@ -193,6 +270,24 @@ public class CPD3314Assign4 {
     public static void doExercise11() {
         // TODO: Complete Exercise 11 Below
 
+        
+        
+        double F;
+      
+        System.out.println("C           F");
+        System.out.println("-------------");
+        
+        for(double i=0.0; i<=100.0;i++)
+        {
+        
+            F = (9.0/5.0) * i + 32;
+
+         System.out.printf(i+"          "+"%1$.1f",F); 
+         
+         System.out.println();
+         //System.out.println(+i+  "  "+"  "+F);
+        
+        }
     }
 
     /*
@@ -212,16 +307,39 @@ public class CPD3314Assign4 {
      *   3: But you shall shine more bright in these contents
      *   ...
      */
-    public static void doExercise14() {
+      public static void doExercise14() throws IOException{
         // TODO: Complete Exercise 14 Below
-
+         
+          
+           
+         try{
+          String file;    
+               System.out.println("What file do you want to read?");
+          Scanner s = new Scanner(System.in);
+          file = s.nextLine();
+          
+          File f = new File(file);
+              try (Scanner p = new Scanner(f)) {
+                  int i = 1;
+                  while (p.hasNext()){
+                      
+                      String line = p.nextLine();
+                      System.out.println(i+": "+line);
+                      i++;
+                      
+                  }  
+              p.close();
+              }
+         }
+         catch(Exception e){}
+              
     }
 
     /*
      * Exercise 17 & 18 - Random Number Guessing Game with Enhancement
      * 
      * Write a program that generates a random number 1-50 and asks the user to 
-     * guess what the number is. If the user's guess is higher than the random 
+     * guess what the       number is. If the user's guess is higher than the random 
      * number, the program should display "Too high, try again." If the user's 
      * guess is lower than the random number, the program should display "Too 
      * low, try again." The program should use a loop that repeats until the user 
@@ -247,8 +365,35 @@ public class CPD3314Assign4 {
      *   32
      *   Correct! That took 7 attempts.
      */
-    public static void doExercise18() {
+      public static void doExercise18(){
         // TODO: Complete Exercise 17 & 18 Below
+        int x,y=0,count=1;
+        Scanner sc = new Scanner(System.in);
+        Random rn = new Random();
         
+        x = rn.nextInt(50);
+        if(x==0){
+        
+        x=x+1;
+        }
+              
+        while(y!=x){
+ 
+            
+          System.out.println("Guess my number (1-50):");
+         y= sc.nextInt();
+            
+            if (y>x)
+        {
+        System.out.println("Too high, try again.");
+        }
+        else if(y<x){
+        System.out.println("Too low, try again.");
+        }
+        else{
+        System.out.println("Correct! That took "+count+" attempts.");
+        }
+            count++;
+        }
     }
 }
